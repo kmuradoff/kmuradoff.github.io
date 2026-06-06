@@ -158,15 +158,16 @@ export function initGSAP() {
     const atTop = (window.scrollY || 0) < window.innerHeight * 0.4
     if (atTop) {
       gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .fromTo('.hero-status',    { y: 30, opacity: 0 },                   { y: 0, opacity: 1, duration: 0.7, delay: 0.15 })
+        .fromTo('.hero-deco',      { opacity: 0, scale: 0.96 },             { opacity: 1, scale: 1, duration: 2.2, ease: 'power2.out' }, 0)
+        .fromTo('.hero-status',    { y: 30, opacity: 0 },                   { y: 0, opacity: 1, duration: 0.7, delay: 0.15 }, 0)
         .fromTo('.hero-name',      { y: 72, opacity: 0, skewX: 4, filter: 'blur(8px)' },
                                    { y: 0,  opacity: 1, skewX: 0, filter: 'blur(0px)', duration: 1.1 }, '-=0.4')
         .fromTo('.hero-role',      { y: 30, opacity: 0 },                   { y: 0, opacity: 1, duration: 0.7 }, '-=0.6')
         .fromTo('.hero-tag',       { y: 20, opacity: 0 },                   { y: 0, opacity: 1, duration: 0.65 }, '-=0.5')
         .fromTo('.hero-cta .chip', { y: 20, opacity: 0, scale: 0.88 },      { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.07 }, '-=0.4')
-        .fromTo('.scroll-cue',     { opacity: 0, y: 14 },                   { opacity: 1, y: 0, duration: 0.5 }, '-=0.2')
+        .fromTo('.scroll-cue',     { opacity: 0 },                          { opacity: 0.6, duration: 0.5 }, '-=0.2')
     } else {
-      gsap.set(['.hero-status','.hero-name','.hero-role','.hero-tag','.hero-cta .chip','.scroll-cue'],
+      gsap.set(['.hero-deco','.hero-status','.hero-name','.hero-role','.hero-tag','.hero-cta .chip','.scroll-cue'],
                { opacity: 1, y: 0, skewX: 0, scale: 1, filter: 'blur(0px)' })
     }
 

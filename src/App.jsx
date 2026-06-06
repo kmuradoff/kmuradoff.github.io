@@ -39,7 +39,6 @@ function Toolbar({ T, lang, setLang, theme, setTheme, mode, setMode, onDownload,
 
       <button className="tb-icon tb-term-btn" aria-label="open terminal" onClick={onTerminal} title="Interactive terminal (~)">
         <TermIcon />
-        <span className="tb-term-hint">~</span>
       </button>
 
       <div className="seg" role="tablist" aria-label="mode">

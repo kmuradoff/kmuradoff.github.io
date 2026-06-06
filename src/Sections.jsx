@@ -36,24 +36,39 @@ export function Section({ id, num, title, sub, children, label }) {
 export function Hero({ T, meta }) {
   return (
     <section className="section hero" id="top" data-scroll-section data-screen-label="Hero">
-      {/* Three.js particle network */}
       <HeroCanvas />
+
+      {/* Decorative background brackets */}
+      <div className="hero-deco" aria-hidden="true">
+        <span className="hero-deco-bracket hero-deco-bracket--open">{'{'}</span>
+        <span className="hero-deco-bracket hero-deco-bracket--close">{'}'}</span>
+      </div>
 
       <div className="wrap" style={{ display: 'contents' }}>
         <div className="hero-left" data-scroll data-scroll-speed="-1">
-          <div className="hero-status reveal">
-            {T.available}
+
+          <div className="hero-eyebrow">
+            <div className="hero-status reveal">
+              <span className="pulse"></span>
+              {T.available}
+            </div>
+            <span className="hero-eyebrow-line" aria-hidden="true"></span>
           </div>
+
           <h1 className="hero-name reveal">{T.name}</h1>
           <div className="hero-role reveal">{T.role}<span className="caret"></span></div>
           <p className="hero-tag reveal">{T.tagline}</p>
+
           <div className="hero-cta reveal">
             <a className="chip primary" href={"mailto:" + meta.email}><Icon.mail /> {meta.email}</a>
-            <a className="chip" href={meta.github} target="_blank" rel="noopener"><Icon.github /> GitHub</a>
-            <a className="chip" href={meta.linkedin} target="_blank" rel="noopener"><Icon.linkedin /> LinkedIn</a>
-            <a className="chip" href={meta.telegram} target="_blank" rel="noopener"><Icon.telegram /> Telegram</a>
-            <a className="chip" href={meta.hh} target="_blank" rel="noopener"><Icon.hh /> hh.ru</a>
+            <div className="hero-cta-secondary">
+              <a className="chip" href={meta.github} target="_blank" rel="noopener"><Icon.github /> GitHub</a>
+              <a className="chip" href={meta.linkedin} target="_blank" rel="noopener"><Icon.linkedin /> LinkedIn</a>
+              <a className="chip" href={meta.telegram} target="_blank" rel="noopener"><Icon.telegram /> Telegram</a>
+              <a className="chip" href={meta.hh} target="_blank" rel="noopener"><Icon.hh /> hh.ru</a>
+            </div>
           </div>
+
         </div>
       </div>
       <div className="scroll-cue"><span className="bar"></span>{T.ui.scroll}</div>
