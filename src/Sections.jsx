@@ -38,22 +38,47 @@ export function Hero({ T, meta }) {
     <section className="section hero" id="top" data-scroll-section data-screen-label="Hero">
       <HeroCanvas />
 
-      {/* Decorative background brackets */}
+      {/* Decorative background Java code */}
       <div className="hero-deco" aria-hidden="true">
-        <span className="hero-deco-bracket hero-deco-bracket--open">{'{'}</span>
-        <span className="hero-deco-bracket hero-deco-bracket--close">{'}'}</span>
+        <pre className="hero-deco-code">{`@Service
+@RequiredArgsConstructor
+public class OrderOrchestrator {
+
+    private final WorkflowClient temporal;
+    private final MasterRepository masters;
+    private final KafkaTemplate<String,
+        OrderEvent> kafka;
+
+    @Transactional
+    public OrderResponse dispatch(
+            CreateOrderCmd cmd) {
+        var wfId = "order-" + cmd.orderId();
+        var stub = temporal.newWorkflowStub(
+            OrderWorkflow.class,
+            WorkflowOptions.newBuilder()
+                .setTaskQueue("orders")
+                .setWorkflowId(wfId)
+                .build());
+        return stub.execute(cmd);
+    }
+
+    @Scheduled(fixedDelay = 30_000)
+    public void rebalance() {
+        masters.findAvailable()
+            .stream()
+            .filter(Master::isUnderutilized)
+            .forEach(this::notify);
+    }
+
+    private void notify(Master m) {
+        kafka.send("masters.available",
+            new MasterReadyEvent(m.getId()));
+    }
+}`}</pre>
       </div>
 
       <div className="wrap" style={{ display: 'contents' }}>
         <div className="hero-left" data-scroll data-scroll-speed="-1">
-
-          <div className="hero-eyebrow">
-            <div className="hero-status reveal">
-              <span className="pulse"></span>
-              {T.available}
-            </div>
-            <span className="hero-eyebrow-line" aria-hidden="true"></span>
-          </div>
 
           <h1 className="hero-name reveal">{T.name}</h1>
           <div className="hero-role reveal">{T.role}<span className="caret"></span></div>
