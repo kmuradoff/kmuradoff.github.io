@@ -1,6 +1,7 @@
 /* =====================================================================
    Sections.jsx — all presentational section components
    ===================================================================== */
+import { useState, useEffect } from 'react'
 import { CV } from './data.js'
 import { HeroCanvas } from './HeroCanvas.jsx'
 
@@ -32,49 +33,71 @@ export function Section({ id, num, title, sub, children, label }) {
   )
 }
 
+/* ---------------- typewriter code for hero deco ---------------- */
+const HERO_CODE = `@Service
+@RequiredArgsConstructor
+public class OrderOrchestrator {
+
+  private final WorkflowClient temporal;
+  private final MasterRepository masters;
+
+  @Transactional
+  public Order dispatch(
+      CreateOrderCmd cmd) {
+    return temporal
+      .newWorkflowStub(
+        OrderWorkflow.class)
+      .execute(cmd);
+  }
+
+  @Scheduled(fixedDelay = 30_000)
+  public void rebalance() {
+    masters.findAvailable()
+      .filter(Master::isReady)
+      .forEach(this::notify);
+  }
+}`
+
+function TypewriterCode() {
+  const [text, setText]     = useState('')
+  const [idx, setIdx]       = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  useEffect(() => {
+    if (paused) {
+      const t = setTimeout(() => { setText(''); setIdx(0); setPaused(false) }, 3500)
+      return () => clearTimeout(t)
+    }
+    if (idx >= HERO_CODE.length) { setPaused(true); return }
+    const ch    = HERO_CODE[idx]
+    const delay = ch === '\n' ? 70 : 16
+    const t = setTimeout(() => {
+      setText(p => p + ch)
+      setIdx(p => p + 1)
+    }, delay)
+    return () => clearTimeout(t)
+  }, [idx, paused])
+
+  return (
+    <pre className="hero-deco-code">
+      {text}<span className="hero-deco-cursor">▌</span>
+    </pre>
+  )
+}
+
 /* ---------------- HERO ---------------- */
 export function Hero({ T, meta }) {
   return (
     <section className="section hero" id="top" data-scroll-section data-screen-label="Hero">
       <HeroCanvas />
 
-      {/* Decorative background Java code */}
+      {/* Decorative brackets with typewriter code */}
       <div className="hero-deco" aria-hidden="true">
-        <pre className="hero-deco-code">{`@Service
-@RequiredArgsConstructor
-public class OrderOrchestrator {
-
-    private final WorkflowClient temporal;
-    private final MasterRepository masters;
-    private final KafkaTemplate<String,
-        OrderEvent> kafka;
-
-    @Transactional
-    public OrderResponse dispatch(
-            CreateOrderCmd cmd) {
-        var wfId = "order-" + cmd.orderId();
-        var stub = temporal.newWorkflowStub(
-            OrderWorkflow.class,
-            WorkflowOptions.newBuilder()
-                .setTaskQueue("orders")
-                .setWorkflowId(wfId)
-                .build());
-        return stub.execute(cmd);
-    }
-
-    @Scheduled(fixedDelay = 30_000)
-    public void rebalance() {
-        masters.findAvailable()
-            .stream()
-            .filter(Master::isUnderutilized)
-            .forEach(this::notify);
-    }
-
-    private void notify(Master m) {
-        kafka.send("masters.available",
-            new MasterReadyEvent(m.getId()));
-    }
-}`}</pre>
+        <span className="hero-deco-bracket hero-deco-bracket--open">{'{'}</span>
+        <div className="hero-deco-inner">
+          <TypewriterCode />
+        </div>
+        <span className="hero-deco-bracket hero-deco-bracket--close">{'}'}</span>
       </div>
 
       <div className="wrap" style={{ display: 'contents' }}>

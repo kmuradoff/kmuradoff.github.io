@@ -207,27 +207,57 @@ body.mode-plain .reveal { opacity: 1 !important; transform: none !important; ani
   z-index: 0;
 }
 
-/* ── Decorative background Java code ── */
+/* ── Decorative { } brackets with typewriter code ── */
 .hero-deco {
   position: absolute;
-  right: clamp(20px, 4vw, 80px);
+  right: clamp(10px, 3vw, 60px);
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
   pointer-events: none;
   user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0;
   animation: deco-drift 22s ease-in-out infinite alternate;
+}
+
+.hero-deco-bracket {
+  font-family: var(--font-display);
+  font-size: clamp(180px, 20vw, 320px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--accent) 18%, transparent);
+  filter: drop-shadow(0 0 60px color-mix(in srgb, var(--accent) 8%, transparent));
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.hero-deco-bracket--close { animation-delay: -9s; }
+
+.hero-deco-inner {
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
 }
 
 .hero-deco-code {
   font-family: var(--font-mono);
-  font-size: clamp(11px, 0.9vw, 13.5px);
-  line-height: 1.75;
+  font-size: clamp(10px, 0.82vw, 12.5px);
+  line-height: 1.72;
   color: var(--accent-text);
-  opacity: 0.065;
+  opacity: 0.22;
   white-space: pre;
   margin: 0;
   padding: 0;
+  min-width: 220px;
+}
+
+.hero-deco-cursor {
+  color: var(--accent-text);
+  animation: blink 1s steps(1) infinite;
+  opacity: 0.6;
 }
 
 @keyframes deco-drift {
@@ -237,8 +267,12 @@ body.mode-plain .reveal { opacity: 1 !important; transform: none !important; ani
 
 body.mode-plain .hero-deco { display: none; }
 @media print { .hero-deco { display: none !important; } }
+@media (max-width: 1024px) { .hero-deco { display: none; } }
 
-[data-theme="light"] .hero-deco-code { opacity: 0.045; }
+[data-theme="light"] .hero-deco-bracket {
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+[data-theme="light"] .hero-deco-code { opacity: 0.18; }
 
 /* ── Hero content ── */
 .hero-left {
@@ -313,10 +347,10 @@ body.mode-plain .hero-deco { display: none; }
 }
 
 [data-theme="light"] .hero-name {
-  background: linear-gradient(148deg, var(--text) 0%, color-mix(in srgb, var(--text) 60%, var(--accent)) 55%, var(--accent) 100%);
+  background: linear-gradient(148deg, #1a2e1a 0%, color-mix(in srgb, var(--text) 55%, var(--accent)) 50%, var(--accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  filter: drop-shadow(0 0 32px color-mix(in srgb, var(--accent) 18%, transparent));
+  filter: drop-shadow(0 0 32px color-mix(in srgb, var(--accent) 22%, transparent));
 }
 
 /* ── Role line ── */
@@ -890,7 +924,28 @@ html.has-scroll-smooth { overflow: hidden; }
   backdrop-filter: blur(20px) saturate(1.5);
   background: color-mix(in srgb, var(--surface) 80%, transparent) !important;
 }
-[data-theme="light"] .hero-canvas-wrap { opacity: 0.5; }
+/* ── Light theme: hide WebGL canvas (it outputs dark colours on white bg)
+      Replace with CSS gradient blobs so hero still has the green atmosphere ── */
+[data-theme="light"] .hero-canvas-wrap { display: none; }
+
+[data-theme="light"] .hero {
+  background: linear-gradient(160deg, #f4f9f4 0%, #eef6ee 100%);
+}
+
+[data-theme="light"] .hero::before {
+  background:
+    radial-gradient(ellipse 65% 55% at 22% 88%, rgba(109,179,63,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 45% at 80% 25%, rgba(34,211,238,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 45% at 55% 5%,  rgba(109,179,63,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 35% 50%, rgba(109,179,63,0.06) 0%, transparent 70%);
+}
+
+[data-theme="light"] .hero::after {
+  background:
+    radial-gradient(ellipse 55% 60% at 28% 110%, rgba(109,179,63,0.14) 0%, transparent 62%),
+    radial-gradient(ellipse 30% 30% at 12% 45%,  rgba(34,211,238,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 20% 20% at 82% 18%,  rgba(109,179,63,0.04) 0%, transparent 70%);
+}
 
 /* ── Locomotive scrollbar ── */
 .c-scrollbar { width: 5px !important; }

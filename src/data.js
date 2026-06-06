@@ -64,7 +64,7 @@ export const CV = {
   ru: {
     name: "Кямал Мурадов",
     role: "Java Backend Engineer",
-    tagline: "4+ года продакшн-опыта · Java 21 · микросервисы · cloud-native",
+    tagline: "Java Backend · микросервисы · cloud-native",
     available: "",
     summary:
       "Java Backend Engineer с 4+ годами коммерческого опыта. Специализируюсь на микросервисной архитектуре (Java 21, Spring Boot), cloud-native инфраструктуре (GCP, Kubernetes, Terraform) и оркестрации workflow (Temporal). Владею полным циклом: проектирование API → бизнес-логика → CI/CD → продакшн-мониторинг. Параллельно разрабатываю кроссплатформенные мобильные приложения на Kotlin Multiplatform (iOS + Android).",
@@ -196,7 +196,7 @@ export const CV = {
   en: {
     name: "Kamal Muradov",
     role: "Java Backend Engineer",
-    tagline: "4+ yrs production · Java 21 · microservices · cloud-native",
+    tagline: "Java Backend · microservices · cloud-native",
     available: "",
     summary:
       "Java Backend Engineer with 4+ years of commercial experience. Specialized in microservice architecture (Java 21, Spring Boot), cloud-native infrastructure (GCP, Kubernetes, Terraform), and workflow orchestration (Temporal). Full-cycle ownership: API design → business logic → CI/CD → production monitoring. Additional hands-on experience building cross-platform mobile apps with Kotlin Multiplatform (iOS + Android).",
